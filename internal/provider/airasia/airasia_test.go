@@ -13,7 +13,12 @@ import (
 
 func TestAirAsia_Fetch(t *testing.T) {
 	adapter := airasia.New(fixtures.FS)
-	flights, err := adapter.Fetch(context.Background(), domain.SearchRequest{})
+	flights, err := adapter.Fetch(context.Background(), domain.SearchRequest{
+		Origin:      "CGK",
+		Destination: "DPS",
+		Passengers:  1,
+		CabinClass:  domain.Economy,
+	})
 	if err != nil {
 		t.Fatalf("Fetch() error = %v", err)
 	}

@@ -5,12 +5,13 @@ import (
 	"testing"
 
 	fixtures "flight-search-aggr-system"
+	"flight-search-aggr-system/internal/domain"
 	"flight-search-aggr-system/internal/provider/garuda"
 )
 
 func TestGaruda_Fetch(t *testing.T) {
 	adapter := garuda.New(fixtures.FS)
-	flights, err := adapter.Fetch(context.Background(), testRequest())
+	flights, err := adapter.Fetch(context.Background(), domain.SearchRequest{})
 	if err != nil {
 		t.Fatalf("Fetch() error = %v", err)
 	}
@@ -61,7 +62,7 @@ func TestGaruda_Fetch(t *testing.T) {
 // It documents the exact trap: top-level says SUB/0 stops/90 min; segments say DPS/1 stop/225 min.
 func TestGaruda_GA315_SegmentOverridesTopLevel(t *testing.T) {
 	adapter := garuda.New(fixtures.FS)
-	flights, err := adapter.Fetch(context.Background(), testRequest())
+	flights, err := adapter.Fetch(context.Background(), domain.SearchRequest{})
 	if err != nil {
 		t.Fatalf("Fetch() error = %v", err)
 	}
